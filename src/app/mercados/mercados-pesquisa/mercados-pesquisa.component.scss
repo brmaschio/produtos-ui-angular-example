@@ -1,0 +1,42 @@
+@import "../../../assets/styles/primeng-responsive-table.scss";
+
+.imagemMercado {
+  vertical-align: middle;
+  border-radius: 50px;
+  border: solid 1px gray;
+  padding: 2px;
+}
+
+.p-tag-stutus {
+  display: block;
+}
+
+.buttonRight {
+  float: right;
+}
+
+@media screen and (min-width: 40rem) {
+  .col-id {
+    width: 100px;
+    text-align: center;
+  }
+
+  .col-acoes {
+    width: 120px;
+    text-align: center !important;
+  }
+
+  .col-cnpj {
+    width: 230px;
+  }
+
+  .buttonForm {
+    margin-top: 25px !important;
+  }
+}
+
+@media screen and (max-width: 40rem) {
+  .buttonForm {
+    width: 100% !important;
+  }
+}
