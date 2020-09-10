@@ -1,0 +1,38 @@
+@import "../../../assets/styles/primeng-responsive-table.scss";
+
+.imagemProduto {
+  vertical-align: middle;
+  border-radius: 50px;
+  border: solid 1px gray;
+  padding: 2px;
+}
+
+.p-tag-stutus {
+  display: block;
+}
+
+@media screen and (min-width: 40rem) {
+  .buttonRight {
+    float: right;
+  }
+
+  .buttonForm {
+    margin-top: 25px !important;
+  }
+
+  .col-id {
+    width: 100px;
+    text-align: center;
+  }
+
+  .col-acoes {
+    width: 120px;
+    text-align: center !important;
+  }
+}
+
+@media screen and (max-width: 40rem) {
+  .buttonForm {
+    width: 100%;
+  }
+}
