@@ -1,0 +1,114 @@
+<div class="container">
+
+  <div class="p-grid">
+    <div class="p-col-12">
+      <h1>Produtos</h1>
+    </div>
+  </div>
+
+  <form autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="p-grid">
+
+      <div class="p-field p-col-12 p-md-6 p-fluid">
+        <label class="labelBold" for="mercadoPesquisa">Perquisa: </label>
+        <span class="p-input-icon-right">
+          <i *ngIf="filtro.nome" (click)="limparPesquisa()" class="pi pi-times"></i>
+          <input pInputText placeholder="Digite Um Produto Para Pesquisa" id="mercadoPesquisa" type="text"
+            [(ngModel)]="filtro.nome" name="mercadoPesquisa">
+        </span>
+      </div>
+
+      <div class="p-field p-col-12 p-md-2">
+        <button pButton type="submit" icon="pi pi-search" label="Pesquisar"
+          class="p-button-outlined buttonForm"></button>
+      </div>
+
+      <div class="p-field p-col-12 p-md-4">
+        <button class="buttonRight buttonForm" pButton type="button" icon="pi pi-file" [routerLink]="['/produtos/novo']"
+          label="Novo"></button>
+      </div>
+
+    </div>
+  </form>
+
+  <div class="p-grid">
+    <div class="p-col-12">
+      <p-card>
+
+
+        <p-table [value]="produtos" [paginator]="true" [rows]="filtro.itensPorPagina" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} registros"
+          styleClass="p-datatable-responsive-demo" [totalRecords]="totalDeRegistros" [lazy]="true"
+          (onLazyLoad)="mudarPagina($event)">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="col-id">ID</th>
+              <th class="col-categoria">Categoria</th>
+              <th>Nome</th>
+              <th class="col-id">Imagem</th>
+              <th class="col-acoes">Status</th>
+              <th class="col-acoes"></th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-produto>
+            <tr>
+
+              <td class="col-id">
+                <span class="p-column-title">ID: </span>
+                {{produto.id}}
+              </td>
+
+              <td class="col-categoria">
+                <span class="p-column-title">Categoria: </span>
+                {{produto.categoria.nome}}
+              </td>
+
+              <td>
+                <span class="p-column-title">Nome: </span>
+                {{produto.nome}}
+              </td>
+
+              <td class="col-id">
+                <span class="p-column-title"></span>
+                <img alt="imagemProduto" width="50" class="imagemProduto" src="{{ urlImagem(produto.imagem) }}" />
+              </td>
+
+              <td class="col-acoes">
+                <span class="p-column-title"></span>
+                <span *ngIf="produto.status === 'ATIVO'" tooltipPosition="top" pTooltip="Desabilitar"
+                  class="p-tag p-tag-success p-tag-stutus" (click)="alterarStatus(produto)">Ativo</span>
+                <span *ngIf="produto.status !== 'ATIVO'" tooltipPosition="top" pTooltip="Habilitar"
+                  class="p-tag p-tag-danger p-tag-stutus" (click)="alterarStatus(produto)">Inativo</span>
+              </td>
+
+              <td class="col-acoes">
+                <span class="p-column-title"></span>
+                <button pButton tooltipPosition="top" pTooltip="Editar" icon="pi pi-pencil"
+                  [routerLink]="['/produtos', produto.id]"></button>
+                <button pButton class="rightSideButton" tooltipPosition="top" pTooltip="Excluir" icon="pi pi-trash"
+                  (click)="excluir(produto)"></button>
+              </td>
+
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+              <td [attr.colspan]="2">
+                Nenhum Resultado Encontrado !
+              </td>
+            </tr>
+          </ng-template>
+
+        </p-table>
+
+      </p-card>
+    </div>
+  </div>
+
+</div>
+
+<p-confirmDialog header="Excluir ?" icon="pi pi-exclamation-triangle" acceptLabel="Sim" rejectLabel="Não">
+</p-confirmDialog>

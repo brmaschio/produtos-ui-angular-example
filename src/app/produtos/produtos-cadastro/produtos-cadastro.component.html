@@ -1,0 +1,65 @@
+<div class="container">
+
+  <div class="p-grid">
+    <div class="p-col-12">
+      <h1>{{ editando ? 'Edição de' : 'Cadastro de' }} Produto</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="formulario" autocomplete="off" (ngSubmit)="salvar()">
+    <p-tabView>
+      <p-tabPanel header="Dados Produto">
+        <div class="p-grid">
+
+          <div class="p-field p-col-12 p-md-6 p-fluid">
+            <label class="labelBold" for="nome">Produto: </label>
+            <input formControlName="nome" pInputText id="nome" type="text">
+          </div>
+
+          <div class="p-field p-col-12 p-md-1 p-fluid p-field-mobile-none"></div>
+
+          <div class="p-field p-col-12 p-md-3 p-fluid">
+            <label class="labelBold" for="cnpj">Status: </label>
+            <p-selectButton formControlName="status" [options]="statusOptions"></p-selectButton>
+          </div>
+
+          <div class="p-field p-col-12 p-md-2 p-fluid">
+            <label class="labelBold" for="id">ID: </label>
+            <input formControlName="id" readonly pInputText id="id" type="text" name="id"
+              style="background-color: #f2f2f2">
+          </div>
+
+          <div class="p-field p-col-12 p-md-4 p-fluid">
+            <label class="labelBold" for="codigoDeBarras">Codigo De Barras: </label>
+            <input [readonly]="editando" formControlName="codigoDeBarras" pInputText id="codigoDeBarras"
+              type="number" [style.background-color]="editando ? '#f2f2f2' : 'white' " >
+          </div>
+
+          <div class="p-field p-col-12 p-md-4 p-fluid p-field-mobile-none"></div>
+
+          <div class="p-field p-col-12 p-md-4 p-fluid">
+            <label class="labelBold" for="categoria">Categoria: </label>
+            <p-dropdown [options]="categorias" formControlName="categoria" [showClear]="true"
+              placeholder="Selecione Uma Categoria"></p-dropdown>
+          </div>
+
+          <div class="p-col-12 p-md-6">
+            <button class="buttonForm" pButton type="button" icon="pi pi-file" [routerLink]="['/produtos/novo']" label="Novo"></button>
+          </div>
+
+          <div class="p-col-12 p-md-6">
+
+            <button [disabled]="formulario.invalid" class="buttonRight rightSideButton buttonForm" pButton type="submit"
+              icon="pi pi-save" label="Salvar"></button>
+
+            <button class="buttonRight p-button-success buttonForm" pButton type="button" icon="pi pi-arrow-circle-left"
+              [routerLink]="['/produtos']" label="Voltar"></button>
+
+          </div>
+
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </form>
+
+</div>

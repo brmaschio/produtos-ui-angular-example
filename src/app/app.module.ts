@@ -4,15 +4,24 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { MercadosModule } from './mercados/mercados.module';
+import { ProdutosModule } from './produtos/produtos.module';
+import { CoreModule } from './core/core.module';
+
+import { ToastModule } from 'primeng/toast';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MercadosModule,
+    ProdutosModule,
+    CoreModule,
+    ToastModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

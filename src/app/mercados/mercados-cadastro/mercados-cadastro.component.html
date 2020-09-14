@@ -1,0 +1,138 @@
+<div class="container">
+
+  <div class="p-grid">
+    <div class="p-col-12">
+      <h1>{{ editando ? 'Edição de' : 'Cadastro de' }} Mercado</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="formulario" autocomplete="off" (ngSubmit)="salvar()">
+    <p-tabView>
+
+      <p-tabPanel header="Dados Mercado">
+        <div class="p-grid">
+
+          <div class="p-field p-col-12 p-md-4 p-fluid">
+            <label class="labelBold" for="cnpj">CNPJ: </label>
+            <input mask="00.000.000/0000-00" formControlName="cnpj" [dropSpecialCharacters]="false"
+              [style.background-color]="editando ? '#f2f2f2' : 'white' " pInputText id="cnpj" type="tel"
+              [readonly]="editando">
+          </div>
+
+          <div class="p-field p-col-12 p-md-3 p-fluid p-field-mobile-none"></div>
+
+          <div class="p-field p-col-12 p-md-3 p-fluid">
+            <label class="labelBold" for="cnpj">Status: </label>
+            <p-selectButton formControlName="status" [options]="statusOptions"></p-selectButton>
+          </div>
+
+
+          <div class="p-field p-col-12 p-md-2 p-fluid">
+            <label class="labelBold" for="id">ID: </label>
+            <input formControlName="id" readonly pInputText id="id" type="text" name="id"
+              style="background-color: #f2f2f2">
+          </div>
+
+          <div class="p-field p-col-12 p-md-6 p-fluid">
+            <label class="labelBold" for="nome">Nome: </label>
+            <input pInputText id="nome" type="text" name="nome" formControlName="nome">
+          </div>
+
+          <div class="p-field p-col-12 p-md-6 p-fluid">
+            <label class="labelBold" for="nomeFantasia">Nome Fantasia: </label>
+            <input formControlName="nomeFantasia" pInputText id="nomeFantasia" type="text" name="id">
+          </div>
+
+
+          <div class="p-col-12 p-md-6">
+            <button class="buttonActions" pButton type="button" icon="pi pi-file" [routerLink]="['/mercados/novo']"
+              label="Novo"></button>
+          </div>
+
+          <div class="p-col-12 p-md-6">
+
+            <button [disabled]="formulario.invalid" class="buttonRight rightSideButton buttonActions" pButton
+              type="submit" icon="pi pi-save" label="Salvar"></button>
+
+            <button class="buttonRight p-button-success buttonActions" pButton type="button"
+              icon="pi pi-arrow-circle-left" [routerLink]="['/mercados']" label="Voltar"></button>
+
+          </div>
+
+        </div>
+
+      </p-tabPanel>
+
+      <p-tabPanel header="Endereço">
+        <div class="p-grid" formGroupName="logradouro">
+
+          <div class="p-field p-col-12 p-md-3 p-fluid">
+            <label class="labelBold" for="cep">CEP: </label>
+            <input mask="00.000-000" formControlName="cep" pInputText id="cep" type="tel" name="cep">
+          </div>
+
+          <div class="p-field p-col-12 p-md-1 p-fluid">
+            <button class="buttonForm p-button-outlined" pButton type="button" icon="pi pi-search" tooltipPosition="top"
+              pTooltip="Busca CEP" (click)="buscaCep()" [disabled]="!habilitaPesquisaCep()"></button>
+          </div>
+
+          <div class="p-field p-col-12 p-md-6 p-fluid">
+            <label class="labelBold" for="endereco">Endereço: </label>
+            <input formControlName="endereco" pInputText id="endereco" type="text" name="endereco">
+          </div>
+
+          <div class="p-field p-col-12 p-md-2 p-fluid">
+            <label class="labelBold" for="numero">Numero: </label>
+            <input formControlName="numero" pInputText id="numero" type="number" name="numero">
+          </div>
+
+          <div class="p-field p-col-12 p-md-2 p-fluid">
+            <label class="labelBold" for="comp">Comp.: </label>
+            <input formControlName="complemento" pInputText id="comp" type="text" name="comp">
+          </div>
+
+          <div class="p-field p-col-12 p-md-4 p-fluid">
+            <label class="labelBold" for="bairro">Bairro: </label>
+            <input formControlName="bairro" pInputText id="bairro" type="text" name="bairro">
+          </div>
+
+          <div class="p-field p-col-12 p-md-4 p-fluid">
+            <label class="labelBold" for="cidade">Cidade: </label>
+            <input formControlName="cidade" pInputText id="cidade" type="text" name="cidade">
+          </div>
+
+          <div class="p-field p-col-12 p-md-2 p-fluid">
+            <label class="labelBold" for="estado">Estado: </label>
+            <input formControlName="estado" pInputText id="estado" type="text" name="estado">
+          </div>
+
+          <div class="p-field p-col-12 p-md-3 p-fluid">
+            <label class="labelBold" for="telefone">Telefone: </label>
+            <input mask="(00) 00000-0009" pInputText id="telefone" type="text" name="telefone"
+              [dropSpecialCharacters]="false" [(ngModel)]="telefoneAdicionar" [ngModelOptions]="{standalone: true}">
+          </div>
+
+          <div class="p-field p-col-12 p-md-1 p-fluid">
+            <button class="buttonForm p-button-outlined" pButton type="button" icon="pi pi-plus" tooltipPosition="top"
+              pTooltip="Adicionar Telefone" (click)="adicionarTelefone()" [disabled]="!habilitaAdicionarTelefone()"></button>
+          </div>
+
+          <div class="p-field p-col-12 p-md-8">
+
+            <span *ngFor="let telefone of this.formulario.value.logradouro.telefones">
+              <span class="tag-telefone">
+                <i (click)="removerTelefone(telefone)" class="pi pi-times tag-telefone-icon"></i>
+                {{ telefone }}
+              </span>
+            </span>
+
+
+          </div>
+
+        </div>
+      </p-tabPanel>
+
+    </p-tabView>
+  </form>
+
+</div>
