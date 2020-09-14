@@ -3,7 +3,15 @@
 }
 
 @media screen and (max-width: 40rem) {
+
   .p-field-mobile-none {
     display: none;
   }
+
+  .buttonForm {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+  }
+
 }

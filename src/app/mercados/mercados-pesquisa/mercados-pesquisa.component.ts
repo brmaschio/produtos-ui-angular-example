@@ -1,36 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { MercadosFiltro } from '../mercados.service';
+import { MercadosFiltro, MercadosService } from '../mercados.service';
 
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+
+import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
 
 @Component({
   selector: 'app-mercados-pesquisa',
   templateUrl: './mercados-pesquisa.component.html',
   styleUrls: ['./mercados-pesquisa.component.scss']
 })
-export class MercadosPesquisaComponent implements OnInit {
+export class MercadosPesquisaComponent {
 
   filtro = new MercadosFiltro;
   mercados = [];
+  totalDeRegistros = 0;
 
   constructor(
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private service: MercadosService,
+    private errorHandlerService: ErrorHandlerService,
   ) { }
 
-  ngOnInit(): void {
+  mudarPagina(event: LazyLoadEvent) {
+    const pagina = event.first / event.rows;
+    this.pesquisar(pagina);
   }
 
-  pesquisar() {
-    console.log('Pesquisar... ' + this.filtro.nome);
+  pesquisar(pagina = 0) {
+
+    this.filtro.pagina = pagina;
+
+    this.service.buscarMercados(this.filtro).then(response => {
+
+      this.mercados = response.content;
+      this.totalDeRegistros = response.totalElements;
+
+    }).catch(error => {
+      this.errorHandlerService.handle(error);
+    });
+
   }
 
-  alterarStatus(id) {
-    console.log('alterar status ' + id);
+  alterarStatus(mercado) {
+
+    this.service.alterarStatus(mercado.id).then(response => {
+      mercado.status = response.status;
+    }).catch(error => {
+      this.errorHandlerService.handle(error);
+    })
+
   }
 
   urlImagem(mercadoImagem): string {
     return mercadoImagem ? mercadoImagem : 'assets/images/mercado-default.jpg';
+  }
+
+  limparPesquisa() {
+    this.filtro = new MercadosFiltro;
+    this.pesquisar();
   }
 
   excluir(mercado) {
@@ -45,7 +74,13 @@ export class MercadosPesquisaComponent implements OnInit {
 
   private confirmaExcluir(id: number) {
 
-    console.log('Excluir', id)
+    this.service.excluir(id).then(() => {
+
+      this.pesquisar(this.filtro.pagina);
+
+    }).catch(error => {
+      this.errorHandlerService.handle(error);
+    });
 
   }
 

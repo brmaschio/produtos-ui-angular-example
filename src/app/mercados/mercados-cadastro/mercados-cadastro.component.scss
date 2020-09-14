@@ -5,14 +5,43 @@
   .buttonForm {
     width: 100% !important;
   }
+  .buttonActions {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .tag-telefone {
+    margin-bottom: 8px;
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 40rem) {
   .buttonForm {
     margin-top: 25px !important;
   }
+  .tag-telefone {
+    margin: 25px 5px 0px 5px;
+    width: 165px;
+  }
 }
 
 .buttonRight {
   float: right;
 }
+
+.tag-telefone {
+  background: #2196f3;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 3px;
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+}
+
+.tag-telefone-icon {
+  padding-right: 8px;
+  font-size: 12px;
+}
+
