@@ -11,8 +11,11 @@
 
       <div class="p-field p-col-12 p-md-6 p-fluid">
         <label class="labelBold" for="mercadoPesquisa">Perquisa: </label>
-        <input pInputText placeholder="Digite Um Produto Para Pesquisa" id="mercadoPesquisa" type="text"
-          [(ngModel)]="filtro.nome" name="mercadoPesquisa">
+        <span class="p-input-icon-right">
+          <i *ngIf="filtro.nome" (click)="limparPesquisa()" class="pi pi-times"></i>
+          <input pInputText placeholder="Digite Um Produto Para Pesquisa" id="mercadoPesquisa" type="text"
+            [(ngModel)]="filtro.nome" name="mercadoPesquisa">
+        </span>
       </div>
 
       <div class="p-field p-col-12 p-md-2">
@@ -33,14 +36,15 @@
       <p-card>
 
 
-        <p-table [value]="produtos" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        <p-table [value]="produtos" [paginator]="true" [rows]="filtro.itensPorPagina" [showCurrentPageReport]="true"
           currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} registros"
-          styleClass="p-datatable-responsive-demo">
+          styleClass="p-datatable-responsive-demo" [totalRecords]="totalDeRegistros" [lazy]="true"
+          (onLazyLoad)="mudarPagina($event)">
 
           <ng-template pTemplate="header">
             <tr>
               <th class="col-id">ID</th>
-              <th>Categoria</th>
+              <th class="col-categoria">Categoria</th>
               <th>Nome</th>
               <th class="col-id">Imagem</th>
               <th class="col-acoes">Status</th>
@@ -56,7 +60,7 @@
                 {{produto.id}}
               </td>
 
-              <td>
+              <td class="col-categoria">
                 <span class="p-column-title">Categoria: </span>
                 {{produto.categoria.nome}}
               </td>
@@ -74,9 +78,9 @@
               <td class="col-acoes">
                 <span class="p-column-title"></span>
                 <span *ngIf="produto.status === 'ATIVO'" tooltipPosition="top" pTooltip="Desabilitar"
-                  class="p-tag p-tag-success p-tag-stutus" (click)="alterarStatus(produto.id)">Ativo</span>
+                  class="p-tag p-tag-success p-tag-stutus" (click)="alterarStatus(produto)">Ativo</span>
                 <span *ngIf="produto.status !== 'ATIVO'" tooltipPosition="top" pTooltip="Habilitar"
-                  class="p-tag p-tag-danger p-tag-stutus" (click)="alterarStatus(produto.id)">Inativo</span>
+                  class="p-tag p-tag-danger p-tag-stutus" (click)="alterarStatus(produto)">Inativo</span>
               </td>
 
               <td class="col-acoes">

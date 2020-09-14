@@ -31,7 +31,8 @@
 
           <div class="p-field p-col-12 p-md-4 p-fluid">
             <label class="labelBold" for="codigoDeBarras">Codigo De Barras: </label>
-            <input formControlName="codigoDeBarras" pInputText id="codigoDeBarras" type="number">
+            <input [readonly]="editando" formControlName="codigoDeBarras" pInputText id="codigoDeBarras"
+              type="number" [style.background-color]="editando ? '#f2f2f2' : 'white' " >
           </div>
 
           <div class="p-field p-col-12 p-md-4 p-fluid p-field-mobile-none"></div>
@@ -42,12 +43,16 @@
               placeholder="Selecione Uma Categoria"></p-dropdown>
           </div>
 
-          <div class="p-col-12">
+          <div class="p-col-12 p-md-6">
+            <button class="buttonForm" pButton type="button" icon="pi pi-file" [routerLink]="['/produtos/novo']" label="Novo"></button>
+          </div>
 
-            <button [disabled]="formulario.invalid" class="buttonRight rightSideButton" pButton type="submit"
+          <div class="p-col-12 p-md-6">
+
+            <button [disabled]="formulario.invalid" class="buttonRight rightSideButton buttonForm" pButton type="submit"
               icon="pi pi-save" label="Salvar"></button>
 
-            <button class="buttonRight p-button-success" pButton type="button" icon="pi pi-arrow-circle-left"
+            <button class="buttonRight p-button-success buttonForm" pButton type="button" icon="pi pi-arrow-circle-left"
               [routerLink]="['/produtos']" label="Voltar"></button>
 
           </div>

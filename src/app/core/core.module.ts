@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CepService } from './cep.service';
+import { CepService } from './services/cep.service';
 
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ErrorHandlerService } from './services/error-handler.service';
 
 @NgModule({
   declarations: [],
@@ -15,8 +16,10 @@ import { ConfirmationService } from 'primeng/api';
     HttpClientModule
   ],
   providers: [
+    ErrorHandlerService,
     CepService,
-    ConfirmationService
+    ConfirmationService,
+    MessageService
   ]
 })
 export class CoreModule { }

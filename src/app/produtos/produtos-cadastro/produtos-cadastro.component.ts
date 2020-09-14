@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Status } from 'src/app/core/model';
 import { ProdutosService } from '../produtos.service';
+import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-produtos-cadastro',
@@ -20,6 +22,9 @@ export class ProdutosCadastroComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private service: ProdutosService,
+    private errorHandlerService: ErrorHandlerService,
+    private routerNav: Router,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -28,26 +33,77 @@ export class ProdutosCadastroComponent implements OnInit {
       return { label: Status[key], value: key }
     });
 
-    // TODO
     this.buscaCategorias();
-
     this.criarFormulario();
     this.buscaExistente();
 
   }
 
   salvar() {
-    console.log(this.formulario.value)
+
+    if (this.editando) {
+      this.atualizar();
+    } else {
+      this.adicionar();
+    }
+
   }
 
   get editando(): boolean {
     return Boolean(this.formulario.value.id);
   }
 
+  private atualizar() {
+
+    this.service.atualizar(this.formulario.value).then(response => {
+
+      this.formulario.patchValue(response);
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Sucesso',
+        detail: 'Produto Salvo'
+      });
+
+    }).catch(error => {
+      this.errorHandlerService.handle(error)
+    });
+
+  }
+
+  private adicionar() {
+
+    this.service.adicionar(this.formulario.value).then(response => {
+
+      this.routerNav.navigate(['/produtos', response.id]);
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Sucesso',
+        detail: 'Produto Salvo'
+      });
+
+    }).catch(error => {
+      this.errorHandlerService.handle(error)
+    });
+
+  }
+
   private buscaExistente() {
 
     let id = this.route.snapshot.params['id'];
-    console.log(id);
+
+    if (id) {
+
+      this.service.buscarProdutoPorId(id).then(response => {
+
+        this.formulario.patchValue(response);
+
+      }).catch(error => {
+        this.errorHandlerService.handle(error);
+      })
+
+    }
 
   }
 
@@ -57,7 +113,7 @@ export class ProdutosCadastroComponent implements OnInit {
       id: null,
       nome: [null, Validators.required],
       status: ['ATIVO', Validators.required],
-      imagem: '',
+      imagem: null,
       codigoDeBarras: [null, Validators.required],
       categoria: [null, Validators.required],
     });
@@ -70,8 +126,8 @@ export class ProdutosCadastroComponent implements OnInit {
 
       this.categorias = response;
 
-    }).catch(() => {
-
+    }).catch(error => {
+      this.errorHandlerService.handle(error);
     });
 
   }

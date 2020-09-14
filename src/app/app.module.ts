@@ -8,6 +8,8 @@ import { MercadosModule } from './mercados/mercados.module';
 import { ProdutosModule } from './produtos/produtos.module';
 import { CoreModule } from './core/core.module';
 
+import { ToastModule } from 'primeng/toast';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -17,7 +19,8 @@ import { CoreModule } from './core/core.module';
     AppRoutingModule,
     MercadosModule,
     ProdutosModule,
-    CoreModule
+    CoreModule,
+    ToastModule
   ],
   bootstrap: [AppComponent]
 })

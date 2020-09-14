@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { CepService } from 'src/app/core/cep.service';
-import { Status } from 'src/app/core/model';
+import { CepService } from 'src/app/core/services/cep.service';
+import { Mercado, Status } from 'src/app/core/model';
+import { MercadosService } from '../mercados.service';
+import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-mercados-cadastro',
@@ -14,11 +17,16 @@ export class MercadosCadastroComponent implements OnInit {
 
   formulario: FormGroup;
   statusOptions = [];
+  telefoneAdicionar: String
 
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private cepService: CepService
+    private cepService: CepService,
+    private service: MercadosService,
+    private errorHandlerService: ErrorHandlerService,
+    private routerNav: Router,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -27,34 +35,50 @@ export class MercadosCadastroComponent implements OnInit {
       return { label: Status[key], value: key }
     });
 
-    this.buscaExistente();
     this.criarFormulario();
+    this.buscaExistente();
 
   }
 
   salvar() {
-    console.log(this.formulario.value)
+
+    if (this.editando) {
+      this.atualizar();
+    } else {
+      this.adicionar();
+    }
+
   }
 
   buscaCep() {
 
-      this.cepService.buscarCep(this.formulario.value.logradouro.cep).then(response => {
+    this.cepService.buscarCep(this.formulario.value.logradouro.cep).then(response => {
 
-        const mercadoLogradouro = {
-          logradouro: {
-            bairro: response.bairro,
-            cidade: response.localidade,
-            endereco: response.logradouro,
-            estado: response.uf,
+      const mercadoLogradouro = {
+        logradouro: {
+          bairro: response.bairro,
+          cidade: response.localidade,
+          endereco: response.logradouro,
+          estado: response.uf,
 
-          }
         }
+      }
 
-        this.formulario.patchValue(mercadoLogradouro);
+      this.formulario.patchValue(mercadoLogradouro);
 
-      }).catch(() => {
-
+      this.messageService.add({
+        severity: 'info',
+        detail: 'Endereço Encontrado Com CEP'
       });
+
+    }).catch(() => {
+
+      this.messageService.add({
+        severity: 'error',
+        detail: 'CEP Invalido'
+      });
+
+    });
 
   }
 
@@ -63,14 +87,87 @@ export class MercadosCadastroComponent implements OnInit {
     return cep.length >= 8;
   }
 
+  habilitaAdicionarTelefone(): boolean {
+    const telefone = new String(this.telefoneAdicionar)
+    return telefone.length >= 14;
+  }
+
+  removerTelefone(telefone: String) {
+
+    var telefones = this.formulario.value.logradouro.telefones;
+
+    const telefonePosicao = telefones.indexOf(telefone);
+    telefones.splice(telefonePosicao, 1);
+
+    this.formulario.value.logradouro.telefones = telefones;
+
+  }
+
+  adicionarTelefone() {
+
+    var telefones = this.formulario.value.logradouro.telefones;
+    telefones.push(this.telefoneAdicionar);
+    this.formulario.value.logradouro.telefones = telefones;
+
+    this.telefoneAdicionar = '';
+
+  }
+
   get editando(): boolean {
     return Boolean(this.formulario.value.id);
+  }
+
+  private atualizar() {
+
+    this.service.atualizar(this.formulario.value).then(response => {
+
+      this.formulario.patchValue(response);
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Sucesso',
+        detail: 'Mercado Salvo'
+      });
+
+    }).catch(error => {
+      this.errorHandlerService.handle(error)
+    });
+
+  }
+
+  private adicionar() {
+
+    this.service.adicionar(this.formulario.value).then(response => {
+
+      this.routerNav.navigate(['/mercados', response.id]);
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Sucesso',
+        detail: 'Mercado Salvo'
+      });
+
+    }).catch(error => {
+      this.errorHandlerService.handle(error)
+    });
+
   }
 
   private buscaExistente() {
 
     let id = this.route.snapshot.params['id'];
-    console.log(id);
+
+    if (id) {
+
+      this.service.buscarMercadoPorId(id).then(response => {
+
+        this.formulario.patchValue(response);
+
+      }).catch(error => {
+        this.errorHandlerService.handle(error);
+      })
+
+    }
 
   }
 
@@ -78,11 +175,11 @@ export class MercadosCadastroComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       id: null,
-      cnpj: [null, [Validators.required, Validators.minLength(18), Validators.maxLength(18)]],
+      cnpj: [null, [Validators.required, Validators.minLength(18)]],
       nome: [null, Validators.required],
       nomeFantasia: [null, Validators.required],
       status: ['ATIVO', Validators.required],
-      imagem: '',
+      imagem: null,
       logradouro: this.formBuilder.group({
         endereco: null,
         numero: null,
@@ -91,7 +188,7 @@ export class MercadosCadastroComponent implements OnInit {
         cep: [null, Validators.minLength(8)],
         cidade: null,
         estado: null,
-        telefones: []
+        telefones: [<String[]>[]]
       })
     });
 
