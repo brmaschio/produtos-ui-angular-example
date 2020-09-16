@@ -1,0 +1,42 @@
+@import "../../../assets/styles/primeng-responsive-table.scss";
+
+:host ::ng-deep .p-cell-editing {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+@media screen and (min-width: 40rem) {
+  .col-data {
+    width: 7rem;
+    text-align: center !important;
+  }
+
+  .col-edit {
+    width: 8rem;
+    text-align: center !important;
+  }
+
+  .col-hab-promo {
+    width: 6rem;
+    text-align: center !important;
+  }
+
+  .col-valor {
+    width: 7rem;
+    text-align: right !important;
+  }
+
+  .buttonRight {
+    float: right;
+  }
+
+  .buttonForm {
+    margin-top: 25px !important;
+  }
+}
+
+@media screen and (max-width: 40rem) {
+  .buttonForm {
+    width: 100%;
+  }
+}

@@ -17,7 +17,7 @@ export class MercadosCadastroComponent implements OnInit {
 
   formulario: FormGroup;
   statusOptions = [];
-  telefoneAdicionar: String
+  telefoneAdicionar: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +32,7 @@ export class MercadosCadastroComponent implements OnInit {
   ngOnInit(): void {
 
     this.statusOptions = Object.keys(Status).map(key => {
-      return { label: Status[key], value: key }
+      return { label: Status[key], value: key };
     });
 
     this.criarFormulario();
@@ -62,7 +62,7 @@ export class MercadosCadastroComponent implements OnInit {
           estado: response.uf,
 
         }
-      }
+      };
 
       this.formulario.patchValue(mercadoLogradouro);
 
@@ -83,18 +83,18 @@ export class MercadosCadastroComponent implements OnInit {
   }
 
   habilitaPesquisaCep(): boolean {
-    const cep = new String(this.formulario.value.logradouro.cep)
+    const cep = new String(this.formulario.value.logradouro.cep);
     return cep.length >= 8;
   }
 
   habilitaAdicionarTelefone(): boolean {
-    const telefone = new String(this.telefoneAdicionar)
+    const telefone = new String(this.telefoneAdicionar);
     return telefone.length >= 14;
   }
 
-  removerTelefone(telefone: String) {
+  removerTelefone(telefone: string) {
 
-    var telefones = this.formulario.value.logradouro.telefones;
+    const telefones = this.formulario.value.logradouro.telefones;
 
     const telefonePosicao = telefones.indexOf(telefone);
     telefones.splice(telefonePosicao, 1);
@@ -105,7 +105,7 @@ export class MercadosCadastroComponent implements OnInit {
 
   adicionarTelefone() {
 
-    var telefones = this.formulario.value.logradouro.telefones;
+    const telefones = this.formulario.value.logradouro.telefones;
     telefones.push(this.telefoneAdicionar);
     this.formulario.value.logradouro.telefones = telefones;
 
@@ -130,7 +130,7 @@ export class MercadosCadastroComponent implements OnInit {
       });
 
     }).catch(error => {
-      this.errorHandlerService.handle(error)
+      this.errorHandlerService.handle(error);
     });
 
   }
@@ -148,14 +148,14 @@ export class MercadosCadastroComponent implements OnInit {
       });
 
     }).catch(error => {
-      this.errorHandlerService.handle(error)
+      this.errorHandlerService.handle(error);
     });
 
   }
 
   private buscaExistente() {
 
-    let id = this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params[`id`];
 
     if (id) {
 
@@ -165,7 +165,7 @@ export class MercadosCadastroComponent implements OnInit {
 
       }).catch(error => {
         this.errorHandlerService.handle(error);
-      })
+      });
 
     }
 
@@ -188,7 +188,7 @@ export class MercadosCadastroComponent implements OnInit {
         cep: [null, Validators.minLength(8)],
         cidade: null,
         estado: null,
-        telefones: [<String[]>[]]
+        telefones: [Array<string>()]
       })
     });
 

@@ -19,17 +19,17 @@ export class CepService {
 
     const cep = new String(cepPesquisa);
 
-    if(cep && cep.length >= 8){
+    if (cep && cep.length >= 8) {
 
       return this.http.get<any>(`${this.viaCepURL}${cep}/json`).toPromise().then(response => {
 
-        if(response.erro){
+        if (response.erro) {
           throw new Error('Cep Invalido');
         }
 
         return response;
 
-      })
+      });
 
     }
 
