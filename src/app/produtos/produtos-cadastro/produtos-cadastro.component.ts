@@ -30,7 +30,7 @@ export class ProdutosCadastroComponent implements OnInit {
   ngOnInit(): void {
 
     this.statusOptions = Object.keys(Status).map(key => {
-      return { label: Status[key], value: key }
+      return { label: Status[key], value: key };
     });
 
     this.buscaCategorias();
@@ -66,7 +66,7 @@ export class ProdutosCadastroComponent implements OnInit {
       });
 
     }).catch(error => {
-      this.errorHandlerService.handle(error)
+      this.errorHandlerService.handle(error);
     });
 
   }
@@ -84,14 +84,14 @@ export class ProdutosCadastroComponent implements OnInit {
       });
 
     }).catch(error => {
-      this.errorHandlerService.handle(error)
+      this.errorHandlerService.handle(error);
     });
 
   }
 
   private buscaExistente() {
 
-    let id = this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params[`id`];
 
     if (id) {
 
@@ -101,7 +101,7 @@ export class ProdutosCadastroComponent implements OnInit {
 
       }).catch(error => {
         this.errorHandlerService.handle(error);
-      })
+      });
 
     }
 

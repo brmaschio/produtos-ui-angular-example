@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import { MercadosModule } from './mercados/mercados.module';
 import { ProdutosModule } from './produtos/produtos.module';
+import { MercadoriasModule } from './mercadorias/mercadorias.module';
 import { CoreModule } from './core/core.module';
 
 import { ToastModule } from 'primeng/toast';
@@ -19,6 +20,7 @@ import { ToastModule } from 'primeng/toast';
     AppRoutingModule,
     MercadosModule,
     ProdutosModule,
+    MercadoriasModule,
     CoreModule,
     ToastModule
   ],
