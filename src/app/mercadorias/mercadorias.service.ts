@@ -33,11 +33,11 @@ export class MercadoriasService {
       }
     });
 
-    if (filtro.mercado){
+    if (filtro.mercado) {
       params = params.append('mercado', filtro.mercado);
     }
 
-    if (filtro.produto){
+    if (filtro.produto) {
       params = params.append('produto', filtro.produto);
     }
 
@@ -48,6 +48,12 @@ export class MercadoriasService {
   atualizar(mercadoria: Mercadoria): Promise<Mercadoria> {
 
     return this.http.put<Mercadoria>(`${this.mercadoriasURL}/${mercadoria.id}`, mercadoria).toPromise();
+
+  }
+
+  criar(mercadoria: Mercadoria): Promise<Mercadoria> {
+
+    return this.http.post<Mercadoria>(this.mercadoriasURL, mercadoria).toPromise();
 
   }
 
