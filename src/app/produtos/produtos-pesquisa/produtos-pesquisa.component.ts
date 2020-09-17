@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { ProdutosFiltro, ProdutosService } from '../produtos.service';
 
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
 import { Produto } from 'src/app/core/model';
 
@@ -21,6 +21,7 @@ export class ProdutosPesquisaComponent {
     private confirmationService: ConfirmationService,
     private service: ProdutosService,
     private errorHandlerService: ErrorHandlerService,
+    private messageService: MessageService
   ) { }
 
   mudarPagina(event: LazyLoadEvent) {
@@ -53,6 +54,11 @@ export class ProdutosPesquisaComponent {
     this.service.alterarStatus(produto.id).then(response => {
 
       produto.status = response.status;
+
+      this.messageService.add({
+        severity: 'info',
+        detail: 'Status Atualizado'
+      });
 
     }).catch(error => {
       this.errorHandlerService.handle(error);

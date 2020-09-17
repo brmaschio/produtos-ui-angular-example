@@ -12,6 +12,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 
 import { MercadoriasComponent } from './mercadorias/mercadorias.component';
 import { MercadoriasService } from './mercadorias.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MercadoriasService } from './mercadorias.service';
     ToggleButtonModule,
     InputTextModule,
     TooltipModule,
-    InputNumberModule
+    InputNumberModule,
+    SharedModule,
   ],
   providers: [
     MercadoriasService

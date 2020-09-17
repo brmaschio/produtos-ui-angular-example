@@ -80,6 +80,9 @@
                 <p-cellEditor>
                   <ng-template pTemplate="input">
 
+                    <app-tag-button value="mercadoria.promocao" onLabel="Sim" offLabel="Não" defaultValue="S"
+                      otherValue="N" (alterValue)="alteraPromocao(mercadoria, $event)"></app-tag-button>
+
                   </ng-template>
                   <ng-template pTemplate="output">
                     <span class="p-column-title">Promoção: </span>

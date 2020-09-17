@@ -7,6 +7,7 @@ import { ProdutosPesquisaComponent } from './produtos-pesquisa/produtos-pesquisa
 import { ProdutosCadastroComponent } from './produtos-cadastro/produtos-cadastro.component';
 
 import { ProdutosService } from './produtos.service';
+import { SharedModule } from '../shared/shared.module';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -36,7 +37,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ConfirmDialogModule,
     TabViewModule,
     SelectButtonModule,
-    DropdownModule
+    DropdownModule,
+    SharedModule,
   ],
   providers: [
     ProdutosService
