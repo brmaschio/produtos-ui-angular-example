@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { MercadosFiltro, MercadosService } from '../mercados.service';
 
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
 import { Mercado } from 'src/app/core/model';
@@ -22,6 +22,7 @@ export class MercadosPesquisaComponent {
     private confirmationService: ConfirmationService,
     private service: MercadosService,
     private errorHandlerService: ErrorHandlerService,
+    private messageService: MessageService
   ) { }
 
   mudarPagina(event: LazyLoadEvent) {
@@ -47,7 +48,14 @@ export class MercadosPesquisaComponent {
   alterarStatus(mercado: Mercado) {
 
     this.service.alterarStatus(mercado.id).then(response => {
+
       mercado.status = response.status;
+
+      this.messageService.add({
+        severity: 'info',
+        detail: 'Status Atualizado'
+      });
+
     }).catch(error => {
       this.errorHandlerService.handle(error);
     });

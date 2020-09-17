@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MercadosPesquisaComponent } from './mercados-pesquisa/mercados-pesquisa.component';
 import { MercadosCadastroComponent } from './mercados-cadastro/mercados-cadastro.component';
 import { MercadosService } from './mercados.service';
+import { SharedModule } from '../shared/shared.module';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -37,6 +38,7 @@ import { NgxMaskModule } from 'ngx-mask';
     SelectButtonModule,
     TabViewModule,
     ConfirmDialogModule,
+    SharedModule,
   ],
   providers: [
     MercadosService
