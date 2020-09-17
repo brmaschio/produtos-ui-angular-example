@@ -1,4 +1,17 @@
 .p-datatable .p-datatable-thead > tr > th {
-  background-color: #1089EC !important;
+  background-color: #1089ec !important;
   color: white !important;
+}
+
+.p-dialog-header {
+  background-color: #1089ec !important;
+  color: white !important;
+}
+
+.p-dialog-header-icon {
+  color: white !important;
+}
+
+.p-dialog-bottom .p-dialog {
+  max-width: 1000px;
 }

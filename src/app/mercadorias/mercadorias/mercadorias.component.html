@@ -31,7 +31,8 @@
       </div>
 
       <div class="p-field p-col-12 p-md-2">
-        <button class="buttonRight buttonForm" pButton type="button" icon="pi pi-file" label="Novo"></button>
+        <button (click)="adicionoNovoDisplay = true" class="buttonRight buttonForm" pButton type="button"
+          icon="pi pi-file" label="Novo"></button>
       </div>
 
     </div>
@@ -52,7 +53,7 @@
               <th>Mercado</th>
               <th>Produto</th>
               <th class="col-hab-promo">Promoção</th>
-              <th class="col-hab-promo">Habilitado</th>
+              <th class="col-hab-promo">Status</th>
               <th class="col-valor">Valor</th>
               <th class="col-edit"></th>
             </tr>
@@ -96,12 +97,12 @@
               <td class="col-hab-promo" pEditableColumn>
                 <p-cellEditor>
                   <ng-template pTemplate="input">
-                    <span class="p-column-title">Habilitado: </span>
+                    <span class="p-column-title">Status: </span>
                     <p-toggleButton [(ngModel)]="mercadoria.habilitado" onLabel="Ativo" offLabel="Inativo">
                     </p-toggleButton>
                   </ng-template>
                   <ng-template pTemplate="output">
-                    <span class="p-column-title">Habilitado: </span>
+                    <span class="p-column-title">Status: </span>
                     <span [style.color]="mercadoria.habilitado ? 'blue' : 'red'">
                       {{mercadoria.habilitado ? 'Ativo' : 'Inativo'}}
                     </span>
@@ -125,6 +126,8 @@
               </td>
 
               <td class="col-edit">
+
+                <span class="p-column-title"></span>
 
                 <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                   pInitEditableRow *ngIf="!editing" (click)="iniciarEdicaoLinha(mercadoria)" tooltipPosition="top"
@@ -151,3 +154,7 @@
   </div>
 
 </div>
+
+<app-mercadorias-cadastro (fecharDialog)="adicionoNovoDisplay = false" [display]="adicionoNovoDisplay"
+  (mercadoriaAdicionada)="mercadoriaAdicionada($event)">
+</app-mercadorias-cadastro>

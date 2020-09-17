@@ -9,14 +9,18 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { MercadoriasComponent } from './mercadorias/mercadorias.component';
 import { MercadoriasService } from './mercadorias.service';
 import { SharedModule } from '../shared/shared.module';
+import { MercadoriasCadastroComponent } from './mercadorias-cadastro/mercadorias-cadastro.component';
 
 @NgModule({
   declarations: [
-    MercadoriasComponent
+    MercadoriasComponent,
+    MercadoriasCadastroComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +33,8 @@ import { SharedModule } from '../shared/shared.module';
     TooltipModule,
     InputNumberModule,
     SharedModule,
+    DialogModule,
+    DropdownModule
   ],
   providers: [
     MercadoriasService

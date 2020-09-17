@@ -17,6 +17,7 @@ export class MercadoriasComponent {
   filtro = new MercadoriasFiltro();
   mercadorias = Array<Mercadoria>();
   totalDeRegistros = 0;
+  adicionoNovoDisplay = false;
 
   mercadoriasEditando: { [s: string]: any; } = {};
 
@@ -80,8 +81,20 @@ export class MercadoriasComponent {
 
   }
 
-  alteraPromocao(mercadoria: Mercadoria, promocao){
+  alteraPromocao(mercadoria: Mercadoria, promocao) {
     mercadoria.promocao = promocao;
+  }
+
+  mercadoriaAdicionada(mercadoria: Mercadoria) {
+
+    this.mercadorias.splice(0, 0, mercadoria);
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Sucesso',
+      detail: 'Mercadoria Salva'
+    });
+
   }
 
 }
