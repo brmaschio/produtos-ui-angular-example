@@ -1,7 +1,9 @@
+// Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+// UI
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -12,10 +14,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 
+// Projeto
 import { MercadoriasComponent } from './mercadorias/mercadorias.component';
 import { MercadoriasService } from './mercadorias.service';
 import { SharedModule } from '../shared/shared.module';
 import { MercadoriasCadastroComponent } from './mercadorias-cadastro/mercadorias-cadastro.component';
+import { MercadoriasRoutingModule } from './mercadorias-routing.module';
 
 @NgModule({
   declarations: [
@@ -23,8 +27,11 @@ import { MercadoriasCadastroComponent } from './mercadorias-cadastro/mercadorias
     MercadoriasCadastroComponent
   ],
   imports: [
+    // Angular
     CommonModule,
     FormsModule,
+
+    // UI
     CardModule,
     TableModule,
     ButtonModule,
@@ -32,9 +39,12 @@ import { MercadoriasCadastroComponent } from './mercadorias-cadastro/mercadorias
     InputTextModule,
     TooltipModule,
     InputNumberModule,
-    SharedModule,
     DialogModule,
-    DropdownModule
+    DropdownModule,
+
+    // Projeto
+    SharedModule,
+    MercadoriasRoutingModule,
   ],
   providers: [
     MercadoriasService

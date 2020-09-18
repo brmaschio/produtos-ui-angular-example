@@ -1,15 +1,14 @@
+// Angular
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// Projeto
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import { MercadosModule } from './mercados/mercados.module';
-import { ProdutosModule } from './produtos/produtos.module';
 import { SegurancaModule } from './seguranca/seguranca.module';
-import { MercadoriasModule } from './mercadorias/mercadorias.module';
 import { CoreModule } from './core/core.module';
 
+// UI
 import { ToastModule } from 'primeng/toast';
 
 @NgModule({
@@ -17,13 +16,15 @@ import { ToastModule } from 'primeng/toast';
     AppComponent
   ],
   imports: [
+    // Angular
     BrowserModule,
     AppRoutingModule,
-    MercadosModule,
-    ProdutosModule,
+
+    // Projeto
     SegurancaModule,
-    MercadoriasModule,
     CoreModule,
+
+    // UI
     ToastModule
   ],
   bootstrap: [AppComponent]

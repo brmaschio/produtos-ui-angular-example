@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Status } from 'src/app/core/model';
-import { ProdutosService } from '../produtos.service';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
+import { ProdutosService } from '../produtos.service';
+
 import { MessageService } from 'primeng/api';
 
 @Component({
