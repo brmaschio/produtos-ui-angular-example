@@ -1,0 +1,5 @@
+<span *ngIf="value === defaultValue" tooltipPosition="top" [pTooltip]="tooltipOff"
+class="p-tag p-tag-success p-tag-stutus" (click)="alterValueEvent()">{{onLabel}}</span>
+
+<span *ngIf="value !== defaultValue" tooltipPosition="top" [pTooltip]="tooltipOn"
+class="p-tag p-tag-danger p-tag-stutus" (click)="alterValueEvent()">{{offLabel}}</span>

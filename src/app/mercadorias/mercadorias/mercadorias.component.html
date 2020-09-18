@@ -1,0 +1,160 @@
+<div class="container">
+
+  <div class="p-grid">
+    <div class="p-col-12">
+      <h1>Mercadorias</h1>
+    </div>
+  </div>
+
+  <form autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="p-grid">
+
+      <div class="p-field p-col-12 p-md-3 p-fluid">
+        <label class="labelBold" for="mercadoPesquisa">Perquisa: </label>
+        <input pInputText placeholder="Digite Um Mercado Para Pesquisa" id="mercadoPesquisa" type="text"
+          [(ngModel)]="filtro.mercado" name="mercadoPesquisa">
+      </div>
+
+      <div class="p-field p-col-12 p-md-3 p-fluid">
+        <input pInputText placeholder="Digite Um Produto Para Pesquisa" id="produtoPesquisa" type="text"
+          [(ngModel)]="filtro.produto" name="produtoPesquisa" class="buttonForm">
+      </div>
+
+      <div class="p-field p-col-12 p-md-2 p-fluid">
+        <button pButton type="submit" icon="pi pi-search" label="Pesquisar"
+          class="p-button-outlined buttonForm"></button>
+      </div>
+
+      <div class="p-field p-col-12 p-md-2">
+        <button pButton type="button" icon="pi pi-times" (click)="limparPesquisa()" class="p-button-outlined buttonForm"
+          label="Limpar"></button>
+      </div>
+
+      <div class="p-field p-col-12 p-md-2">
+        <button (click)="adicionoNovoDisplay = true" class="buttonRight buttonForm" pButton type="button"
+          icon="pi pi-file" label="Novo"></button>
+      </div>
+
+    </div>
+  </form>
+
+  <div class="p-grid">
+    <div class="p-col-12">
+      <p-card>
+
+        <p-table [value]="mercadorias" [paginator]="true" [rows]="filtro.itensPorPagina" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} registros"
+          styleClass="p-datatable-responsive-demo" [totalRecords]="totalDeRegistros" (onLazyLoad)="mudarPagina($event)"
+          [lazy]="true" editMode="row" dataKey="id">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="col-data">Data</th>
+              <th>Mercado</th>
+              <th>Produto</th>
+              <th class="col-hab-promo">Promoção</th>
+              <th class="col-hab-promo">Status</th>
+              <th class="col-valor">Valor</th>
+              <th class="col-edit"></th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-mercadoria let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="mercadoria">
+
+              <td class="col-data">
+                <span class="p-column-title">Data: </span>
+                {{mercadoria.dataAtualizacao |  date: 'dd/MM/yyyy'}}
+              </td>
+
+              <td class="col-id">
+                <span class="p-column-title">Mercado: </span>
+                {{mercadoria.mercado.nome}}
+              </td>
+
+              <td class="col-id">
+                <span class="p-column-title">Produto: </span>
+                {{mercadoria.produto.nome}}
+              </td>
+
+              <td class="col-hab-promo" pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+
+                    <app-tag-button value="mercadoria.promocao" onLabel="Sim" offLabel="Não" defaultValue="S"
+                      otherValue="N" (alterValue)="alteraPromocao(mercadoria, $event)"></app-tag-button>
+
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    <span class="p-column-title">Promoção: </span>
+                    <span [style.color]="mercadoria.promocao === 'S' ? 'cornflowerblue' : 'coral'">
+                      {{mercadoria.promocao === 'S' ? 'Sim' : 'Não'}}
+                    </span>
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+              <td class="col-hab-promo" pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <span class="p-column-title">Status: </span>
+                    <p-toggleButton [(ngModel)]="mercadoria.habilitado" onLabel="Ativo" offLabel="Inativo">
+                    </p-toggleButton>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    <span class="p-column-title">Status: </span>
+                    <span [style.color]="mercadoria.habilitado ? 'blue' : 'red'">
+                      {{mercadoria.habilitado ? 'Ativo' : 'Inativo'}}
+                    </span>
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+              <td class="col-valor" pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <span class="p-column-title">Valor: </span>
+                    <p-inputNumber [(ngModel)]="mercadoria.valor" mode="decimal"
+                      [inputStyle]="{'width':'100px', 'text-align':'right'}" [maxFractionDigits]="2"
+                      [minFractionDigits]="1" locale="pt-BR" [min]="0"></p-inputNumber>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    <span class="p-column-title">Valor: </span>
+                    {{mercadoria.valor | number: '1.2-2'}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+              <td class="col-edit">
+
+                <span class="p-column-title"></span>
+
+                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                  pInitEditableRow *ngIf="!editing" (click)="iniciarEdicaoLinha(mercadoria)" tooltipPosition="top"
+                  pTooltip="Editar"></button>
+
+                <button pButton pRipple type="button" icon="pi pi-check"
+                  class="p-button-rounded p-button-text p-button-success p-mr-2" pSaveEditableRow *ngIf="editing"
+                  (click)="salvarEdicaoLinha(mercadoria, ri)" tooltipPosition="top" pTooltip="Salvar"></button>
+
+                <button pButton pRipple type="button" icon="pi pi-times"
+                  class="p-button-rounded p-button-text p-button-danger" pCancelEditableRow *ngIf="editing"
+                  (click)="cancelarEdicaoLinha(mercadoria, ri)" tooltipPosition="top" pTooltip="Descartar"></button>
+
+
+              </td>
+
+            </tr>
+          </ng-template>
+
+        </p-table>
+
+      </p-card>
+    </div>
+  </div>
+
+</div>
+
+<app-mercadorias-cadastro (fecharDialog)="adicionoNovoDisplay = false" [display]="adicionoNovoDisplay"
+  (mercadoriaAdicionada)="mercadoriaAdicionada($event)">
+</app-mercadorias-cadastro>

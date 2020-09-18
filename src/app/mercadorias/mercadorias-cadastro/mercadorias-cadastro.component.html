@@ -1,0 +1,64 @@
+<form autocomplete="off" #f="ngForm" (ngSubmit)="salvar(f)">
+
+  <p-dialog (onHide)="fechar()" position="bottom" header="Adicionar Mercadoria" modal="true" [(visible)]="display">
+
+    <div class="p-grid">
+
+      <div class="p-field p-col-12"></div>
+
+      <div class="p-field p-col-12 p-md-6 p-fluid">
+        <label class="labelBold" for="mercadoPesquisaAdd">Perquisar Mercado: </label>
+        <span class="p-input-icon-right">
+          <i *ngIf="filtroMercado.nome" (click)="pesquisarMercado()" class="pi pi-search-plus"></i>
+          <input pInputText placeholder="Digite Um Mercado Para Pesquisa" id="mercadoPesquisaAdd" type="text"
+            name="mercadoPesquisaAdd" [(ngModel)]="filtroMercado.nome">
+        </span>
+      </div>
+      <div class="p-field p-col-12 p-md-6 p-fluid">
+        <label class="labelBold" for="mercado">Mercado: </label>
+        <p-dropdown id="mercado" name="mercado" [options]="mercados" name="mercado" #mercado="ngModel"
+          [(ngModel)]="mercadoriaNova.mercado" required placeholder="Selecione Um Mercado"></p-dropdown>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6 p-fluid">
+        <label class="labelBold" for="produtoPesquisaAdd">Pesquisar Produto: </label>
+        <span class="p-input-icon-right">
+          <i *ngIf="filtroProuto.nome" (click)="pesquisarProduto()" class="pi pi-search-plus"></i>
+          <input pInputText placeholder="Digite Um Produto Para Pesquisa" id="produtoPesquisaAdd" type="text"
+            name="produtoPesquisaAdd" [(ngModel)]="filtroProuto.nome">
+        </span>
+      </div>
+      <div class="p-field p-col-12 p-md-6 p-fluid">
+        <label class="labelBold" for="produto">Produto: </label>
+        <p-dropdown name="produto" id="produto" [options]="produtos" name="produto" #produto="ngModel"
+          [(ngModel)]="mercadoriaNova.produto" required placeholder="Selecione Um Produto"></p-dropdown>
+      </div>
+
+      <div class="p-field p-col-12 p-md-4 p-fluid">
+        <label class="labelBold">Promoção: </label>
+        <app-tag-button value="mercadoria.promocao" onLabel="Sim" offLabel="Não" defaultValue="S" otherValue="N">
+        </app-tag-button>
+      </div>
+      <div class="p-field p-col-12 p-md-4 p-fluid">
+        <label class="labelBold">Status: </label>
+        <p-toggleButton name="habilitado" #habilitado="ngModel" [(ngModel)]="mercadoriaNova.habilitado" onLabel="Ativo"
+          offLabel="Inativo">
+        </p-toggleButton>
+      </div>
+      <div class="p-field p-col-12 p-md-4 p-fluid">
+        <label class="labelBold">Valor: </label>
+        <p-inputNumber mode="decimal" [maxFractionDigits]="2" [minFractionDigits]="1" locale="pt-BR"
+          [inputStyle]="{'text-align':'right'}" [min]="0" name="valor" #valor="ngModel"
+          [(ngModel)]="mercadoriaNova.valor" required>
+        </p-inputNumber>
+      </div>
+
+    </div>
+
+    <p-footer>
+      <button [disabled]="f.invalid" pButton type="submit" icon="pi pi-save" label="Salvar"></button>
+    </p-footer>
+
+  </p-dialog>
+
+</form>

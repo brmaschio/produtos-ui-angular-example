@@ -76,10 +76,7 @@
 
               <td class="col-acoes">
                 <span class="p-column-title"></span>
-                <span *ngIf="mercado.status === 'ATIVO'" tooltipPosition="top" pTooltip="Desabilitar"
-                  class="p-tag p-tag-success p-tag-stutus" (click)="alterarStatus(mercado)">Ativo</span>
-                <span *ngIf="mercado.status !== 'ATIVO'" tooltipPosition="top" pTooltip="Habilitar"
-                  class="p-tag p-tag-danger p-tag-stutus" (click)="alterarStatus(mercado)">Inativo</span>
+                <app-tag-button [value]="mercado.status" (alterValue)="alterarStatus(mercado)"></app-tag-button>
               </td>
 
               <td class="col-acoes">

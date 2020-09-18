@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 
 import { MercadosFiltro, MercadosService } from '../mercados.service';
 
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
+import { Mercado } from 'src/app/core/model';
 
 @Component({
   selector: 'app-mercados-pesquisa',
@@ -13,14 +14,15 @@ import { ErrorHandlerService } from 'src/app/core/services/error-handler.service
 })
 export class MercadosPesquisaComponent {
 
-  filtro = new MercadosFiltro;
-  mercados = [];
+  filtro = new MercadosFiltro();
+  mercados = Array<Mercado>();
   totalDeRegistros = 0;
 
   constructor(
     private confirmationService: ConfirmationService,
     private service: MercadosService,
     private errorHandlerService: ErrorHandlerService,
+    private messageService: MessageService
   ) { }
 
   mudarPagina(event: LazyLoadEvent) {
@@ -43,26 +45,33 @@ export class MercadosPesquisaComponent {
 
   }
 
-  alterarStatus(mercado) {
+  alterarStatus(mercado: Mercado) {
 
     this.service.alterarStatus(mercado.id).then(response => {
+
       mercado.status = response.status;
+
+      this.messageService.add({
+        severity: 'info',
+        detail: 'Status Atualizado'
+      });
+
     }).catch(error => {
       this.errorHandlerService.handle(error);
-    })
+    });
 
   }
 
-  urlImagem(mercadoImagem): string {
+  urlImagem(mercadoImagem: string): string {
     return mercadoImagem ? mercadoImagem : 'assets/images/mercado-default.jpg';
   }
 
   limparPesquisa() {
-    this.filtro = new MercadosFiltro;
+    this.filtro = new MercadosFiltro();
     this.pesquisar();
   }
 
-  excluir(mercado) {
+  excluir(mercado: Mercado) {
 
     this.confirmationService.confirm({
       message: 'Tem Certeza Que Desaja Exluir ' + mercado.nome,

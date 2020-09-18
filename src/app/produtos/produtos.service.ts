@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 
-import { Produto } from '../core/model';
+import { Categoria, Produto } from '../core/model';
+import { SecurityHttp } from '../seguranca/security-http';
 
 export class ProdutosFiltro {
   nome: string;
@@ -20,7 +21,7 @@ export class ProdutosService {
   private produtosURL: string;
 
   constructor(
-    private http: HttpClient
+    private http: SecurityHttp
   ) {
     this.categoriasURL = `${environment.apiUrl}/categorias`;
     this.produtosURL = `${environment.apiUrl}/produtos`;
@@ -35,7 +36,7 @@ export class ProdutosService {
       }
     });
 
-    if(filtro.nome){
+    if (filtro.nome){
       params = params.append('nome', filtro.nome);
     }
 
@@ -43,7 +44,7 @@ export class ProdutosService {
 
   }
 
-  buscarProdutoPorId(id: number) : Promise<Produto> {
+  buscarProdutoPorId(id: number): Promise<Produto> {
 
     return this.http.get<Produto>(`${this.produtosURL}/${id}`).toPromise();
 
@@ -67,7 +68,7 @@ export class ProdutosService {
 
   }
 
-  buscarCategorias(): Promise<any> {
+  buscarCategorias(): Promise<Array<Categoria>> {
 
     return this.http.get<any>(this.categoriasURL).toPromise().then(response => {
 

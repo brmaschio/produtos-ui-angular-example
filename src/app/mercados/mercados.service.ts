@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 
 import { Mercado } from '../core/model';
+import { SecurityHttp } from '../seguranca/security-http';
 
 export class MercadosFiltro {
   nome: string;
@@ -19,7 +20,7 @@ export class MercadosService {
   private mercadosURL: string;
 
   constructor(
-    private http: HttpClient
+    private http: SecurityHttp
   ) {
     this.mercadosURL = `${environment.apiUrl}/mercados`;
   }

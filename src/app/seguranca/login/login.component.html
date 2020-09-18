@@ -1,0 +1,26 @@
+<div class="backLogin">
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+
+      <h2 class="active"> Login </h2>
+
+      <div class="fadeIn first">
+        <img style="width: 250px" class="img-prod" src="assets/images/mercado-default.jpg" id="icon" alt="User Icon" />
+      </div>
+
+      <form autocomplete="off" #f="ngForm">
+
+        <input type="email" id="login" class="fadeIn second" name="usuario" placeholder="E-mail" ngModel required
+          #usuario>
+
+        <input type="password" id="password" class="fadeIn third" name="senha" placeholder="Senha" ngModel required
+          #senha>
+
+        <input type="submit" class="fadeIn fourth" value="Entrar" [disabled]="!f.valid"
+          (click)="login(usuario.value, senha.value); senha.value = '';">
+
+      </form>
+
+    </div>
+  </div>
+</div>
