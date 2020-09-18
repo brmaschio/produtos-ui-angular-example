@@ -1,0 +1,19 @@
+<nav class="navbar">
+
+  <a href="javascript:;" class="navbar-toggle" (click)="menualt()">
+    <i style="font-size: 20px" class="pi pi-bars"></i>
+  </a>
+
+  <ul class="navbar-menu" [hidden]="!exibindoMenu">
+
+    <li class="navbar-usuario">{{ auth.jwtPayload?.nome }}</li>
+
+    <li (click)="menualt()" class="navbar-menuitem" *ngIf="auth.temPermissao('ROLE_MERCADO')"><a routerLink="/mercados">Mercados</a></li>
+    <li (click)="menualt()" class="navbar-menuitem" *ngIf="auth.temPermissao('ROLE_PRODUTO')"><a routerLink="/produtos">Produtos</a></li>
+    <li (click)="menualt()" class="navbar-menuitem" *ngIf="auth.temPermissao('ROLE_MERCADORIAS')"><a routerLink="/mercadorias">Mercadorias</a></li>
+
+    <li class="navbar-menuitem"><a href="javascript:;" (click)="logout()">Logout</a></li>
+
+  </ul>
+
+</nav>

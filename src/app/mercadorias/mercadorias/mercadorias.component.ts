@@ -62,8 +62,6 @@ export class MercadoriasComponent {
 
   salvarEdicaoLinha(mercadoria: Mercadoria, index: number) {
 
-    console.log(mercadoria.promocao);
-
     this.service.atualizar(mercadoria).then(response => {
 
       delete this.mercadoriasEditando[mercadoria.id];
