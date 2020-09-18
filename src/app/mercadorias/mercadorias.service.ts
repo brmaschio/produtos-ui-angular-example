@@ -1,8 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
 import { Mercadoria } from '../core/model';
+import { SecurityHttp } from '../seguranca/security-http';
 
 export class MercadoriasFiltro {
   produto: string;
@@ -19,7 +20,7 @@ export class MercadoriasService {
   private mercadoriasURL: string;
 
   constructor(
-    private http: HttpClient
+    private http: SecurityHttp
   ) {
     this.mercadoriasURL = `${environment.apiUrl}/mercadorias`;
   }

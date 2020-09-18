@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 
 import { Categoria, Produto } from '../core/model';
+import { SecurityHttp } from '../seguranca/security-http';
 
 export class ProdutosFiltro {
   nome: string;
@@ -20,7 +21,7 @@ export class ProdutosService {
   private produtosURL: string;
 
   constructor(
-    private http: HttpClient
+    private http: SecurityHttp
   ) {
     this.categoriasURL = `${environment.apiUrl}/categorias`;
     this.produtosURL = `${environment.apiUrl}/produtos`;
