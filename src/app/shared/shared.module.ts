@@ -1,8 +1,11 @@
+// Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// UI
 import { TooltipModule } from 'primeng/tooltip';
 
+// Projeto
 import { TagButtonComponent } from './tag-button/tag-button.component';
 
 @NgModule({
@@ -10,7 +13,10 @@ import { TagButtonComponent } from './tag-button/tag-button.component';
     TagButtonComponent
   ],
   imports: [
+    // Angular
     CommonModule,
+
+    // UI
     TooltipModule
   ],
   exports: [

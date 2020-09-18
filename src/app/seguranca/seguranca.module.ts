@@ -1,9 +1,13 @@
+// Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { JwtModule } from '@auth0/angular-jwt';
 import { RouterModule } from '@angular/router';
 
+// Terceiros
+import { JwtModule } from '@auth0/angular-jwt';
+
+// Projeto
 import { LoginComponent } from './login/login.component';
 import { LogoutService } from './logout.service';
 import { SecurityHttp } from './security-http';

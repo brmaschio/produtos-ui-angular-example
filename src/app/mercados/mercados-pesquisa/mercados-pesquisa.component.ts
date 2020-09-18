@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 
-import { MercadosFiltro, MercadosService } from '../mercados.service';
-
 import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 
+import { MercadosFiltro, MercadosService } from '../mercados.service';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
 import { Mercado } from 'src/app/core/model';
 

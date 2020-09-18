@@ -4,7 +4,6 @@ import { LazyLoadEvent, MessageService } from 'primeng/api';
 
 import { Mercadoria } from 'src/app/core/model';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
-
 import { MercadoriasFiltro, MercadoriasService } from '../mercadorias.service';
 
 @Component({

@@ -10,7 +10,7 @@
 
     <li (click)="menualt()" class="navbar-menuitem" *ngIf="auth.temPermissao('ROLE_MERCADO')"><a routerLink="/mercados">Mercados</a></li>
     <li (click)="menualt()" class="navbar-menuitem" *ngIf="auth.temPermissao('ROLE_PRODUTO')"><a routerLink="/produtos">Produtos</a></li>
-    <li (click)="menualt()" class="navbar-menuitem" *ngIf="auth.temPermissao('ROLE_MERCADORIAS')"><a routerLink="/mercadorias">Mercadorias</a></li>
+    <li (click)="menualt()" class="navbar-menuitem" *ngIf="auth.temPermissao('ROLE_MERCADORIA')"><a routerLink="/mercadorias">Mercadorias</a></li>
 
     <li class="navbar-menuitem"><a href="javascript:;" (click)="logout()">Logout</a></li>
 

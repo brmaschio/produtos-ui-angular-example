@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
-import { ProdutosFiltro, ProdutosService } from '../produtos.service';
-
 import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
+
+import { ProdutosFiltro, ProdutosService } from '../produtos.service';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
 import { Produto } from 'src/app/core/model';
 

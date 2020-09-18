@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CepService } from 'src/app/core/services/cep.service';
-import { Mercado, Status } from 'src/app/core/model';
+import { Status } from 'src/app/core/model';
 import { MercadosService } from '../mercados.service';
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
+
 import { MessageService } from 'primeng/api';
 
 @Component({
